@@ -1,0 +1,9 @@
+.ipynb_checkpoints
+__pycache__
+*.weights
+HWC.weights
+yolov4/
+darknet_image.py
+darknet_video.py
+darknet.py
+*.dll

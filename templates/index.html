@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Hand Write Calculator</title>
+</head>
+<body>
+    <div>
+        <h2>Upload the photo to calculate.</h2>   
+        <table>
+            <tr><td>File Path:</td></tr>
+            <tr><td><input type="file" id="fileinput" accept=".jpg,.jpeg,.png,.PNG,.jfif,.HEIC" style="width:72px" ></td>
+            <tr><td><img id="showimg" src="" style="display:none;" /></td></tr>
+            <tr>
+            <td><input type="submit" id="submitt" value="submit" style="display:block;"></td> 
+            <td><input type="submit" id="True"    value="正確" style="display:none;"></td>  
+            <td><input type="button" id="modify"  value="修正" style="display:none;"></td>
+            </tr>
+            <tr><td><span id="input_text_name"></span><input type="text" id="input_text" value="" style="display:none;"></td></tr>
+            <tr><td><input type="submit" id="modified" value="確認修改"  style="display:none;"></td></tr>
+            <tr><td><span id="state"></span></td></tr>
+            <p>目前結果:    <span id="resultText"></span></p>
+            <p>圖片大小:    <span id="resultSize"></span></p>
+            <p>辨識結果:    <span id="detectionResult"></span></p>
+            <p>計算結果:    <span id="CalculateResult"></span></p>
+        </table>
+    </div>
+    <script src='../static/index.js'></script>
+</body>
+</html>
