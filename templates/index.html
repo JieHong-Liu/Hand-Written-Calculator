@@ -1,31 +1,103 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset='utf-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <title>Hand Write Calculator</title>
-</head>
-<body>
-    <div>
-        <h2>Upload the photo to calculate.</h2>   
-        <table>
-            <tr><td>File Path:</td></tr>
-            <tr><td><input type="file" id="fileinput" accept=".jpg,.jpeg,.png,.PNG,.jfif,.HEIC" style="width:72px" ></td>
-            <tr><td><img id="showimg" src="" style="display:none;" /></td></tr>
-            <tr>
-            <td><input type="submit" id="submitt" value="submit" style="display:block;"></td> 
-            <td><input type="submit" id="True"    value="正確" style="display:none;"></td>  
-            <td><input type="button" id="modify"  value="修正" style="display:none;"></td>
-            </tr>
-            <tr><td><span id="input_text_name"></span><input type="text" id="input_text" value="" style="display:none;"></td></tr>
-            <tr><td><input type="submit" id="modified" value="確認修改"  style="display:none;"></td></tr>
-            <tr><td><span id="state"></span></td></tr>
-            <p>目前結果:    <span id="resultText"></span></p>
-            <p>圖片大小:    <span id="resultSize"></span></p>
-            <p>辨識結果:    <span id="detectionResult"></span></p>
-            <p>計算結果:    <span id="CalculateResult"></span></p>
-        </table>
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Hand Write Calculator</title> 
+  </head>
+  <body>
+
+<!--<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>-->
+
+  <div class="container-fluid" style="padding-left:0px;padding-right:0px"> 
+    <div class="class_title">   
+      <div class="jumbotron jumbotron-fluid backgroung_img">
+        <div class="container text-center">
+          <h1 class="display-4">Upload the photo to calculate</h1>
+          <p class="lead">Welcome to the HWC, make math easier~~</p>
+        </div>
+      </div>
     </div>
+  </div>    
+  <div class="alert" id="alert_text"> 
+    <strong><span id="resultText"></span></strong>
+  </div>
+  <div class="container" >
+    <div class="row">
+      <div class="col-md-6 col-12">
+        <p class="word">上傳圖片:</p>
+        <input type="file" id="fileinput" class="form-control-file border" accept=".jpg,.jpeg,.png,.PNG,.jfif,.HEIC" >
+        <img id="showimg" src="" class="hidden"  width="400"/>
+            
+        <input type="submit" id="submitt" value="submit" class="btn btn-outline-secondary">
+        <div class="btn-group">
+          <input type="submit" id="True"    value="正確" class="hidden btn btn-outline-secondary">  
+          <input type="button" id="modify"  value="修正" class="hidden btn btn-outline-secondary" >
+        </div>
+        <br/>
+        <p id="input_text_name"></p>
+        <input type="text" id="input_text" value="" class="hidden form-control">
+        
+        <input type="submit" id="modified" value="確認修改" class="hidden btn btn-outline-secondary" >
+      </div>
+      <div class="col-md-6 col-12">  
+        <p class="word">圖片大小:    <span id="resultSize"></span></p>
+        <p class="word">辨識結果:    <span id="detectionResult"></span></p>
+        <p class="word">計算結果:    <span id="CalculateResult"></span></p>
+      </div>
+    </div>
+  </div>
+  
+    
+  
+
+     
+
+    
+
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
     <script src='../static/index.js'></script>
-</body>
+    
+  </body>
 </html>
