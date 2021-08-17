@@ -6,7 +6,7 @@ import time
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from app import app
-from darknet_image import *
+#from darknet_image import *
 from wolfram import evaluation
 from yolov3.yolo_detection_images import *
 
