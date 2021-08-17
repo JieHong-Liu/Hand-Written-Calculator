@@ -3,7 +3,7 @@ import cv2
 import requests
 
 
-def yolov3_detection():
+def yolov3_detection(image_path):
     confidenceThreshold = 0.5
     NMSThreshold = 0.3
     # modelConfiguration = 'yolov3/cfg/yolov3.cfg'
@@ -21,7 +21,8 @@ def yolov3_detection():
 
     net = cv2.dnn.readNetFromDarknet(modelConfiguration, modelWeights)
 
-    image = cv2.imread('yolov3/images/good.jpeg')
+    # image = cv2.imread('yolov3/images/good.jpeg')
+    image = cv2.imread(image_path)
     (H, W) = image.shape[:2]
 
     # Determine output layer names
@@ -59,29 +60,31 @@ def yolov3_detection():
     detection_Objects = []
     if(len(detectionNMS) > 0):
         detection_Objects = []
-        for i in detectionNMS.flatten():
-            (x, y) = (boxes[i][0], boxes[i][1])
-            (w, h) = (boxes[i][2], boxes[i][3])
+        file_name = image_path.split('.')[0]
+        with open(file_name+'.txt', 'w') as file:
+            for i in detectionNMS.flatten():
+                (x, y) = (boxes[i][0], boxes[i][1])
+                (w, h) = (boxes[i][2], boxes[i][3])
 
-            color = [int(c) for c in COLORS[classIDs[i]]]
-            cv2.rectangle(image, (x, y), (x + w, y + h), color, 2)
-            text = '{}: {:.4f}'.format(labels[classIDs[i]], confidences[i])
-            cv2.putText(image, text, (x, y - 5),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
-            # print(labels[classIDs[i]])
-            # print(confidences[i])
-            # for j in range(4):
-            #     print(boxes[i][j])
-            print("{}: {}%".format(labels[classIDs[i]], confidences[i]*100))
-            detection_Objects.append(
-                [labels[classIDs[i]], x, confidences[i]*100])
-        # sort the list
-        for i in range(len(detection_Objects)-1):
-            for j in range(len(detection_Objects) - 1):
-                if(detection_Objects[j][1] > detection_Objects[j+1][1]):
-                    detection_Objects[j], detection_Objects[j +
-                                                            1] = detection_Objects[j+1], detection_Objects[j]
-        print(detection_Objects)
+                color = [int(c) for c in COLORS[classIDs[i]]]
+                cv2.rectangle(image, (x, y), (x + w, y + h), color, 2)
+                text = '{}: {:.4f}'.format(labels[classIDs[i]], confidences[i])
+                cv2.putText(image, text, (x, y - 5),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
+                print("{}: {}%".format(
+                    labels[classIDs[i]], confidences[i]*100))
+                detection_Objects.append(
+                    [labels[classIDs[i]], x, confidences[i]*100])
+            # sort the list
+            for i in range(len(detection_Objects)-1):
+                for j in range(len(detection_Objects) - 1):
+                    if(detection_Objects[j][1] > detection_Objects[j+1][1]):
+                        detection_Objects[j], detection_Objects[j +
+                                                                1] = detection_Objects[j+1], detection_Objects[j]
+            for d_object in detection_Objects:
+                if(float(d_object[2]) > 0):
+                    file.write(d_object[0])
+        # print(detection_Objects)
 
     # cv2.imshow('Image', image)
     # cv2.waitKey(0)

@@ -6,7 +6,7 @@ import time
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from app import app
-#from darknet_image import *
+from darknet_image import *
 from wolfram import evaluation
 from yolov3.yolo_detection_images import *
 
@@ -27,7 +27,26 @@ def evaluate():
 
 @app.route('/test_predict', methods=['GET', 'POST'])
 def yolo_predictions():
-    return yolov3_detection()
+    try:
+        img = request.files.get('')
+        if(allowDataFormat(img)):
+            img.save('image/'+img.filename)
+            image = cv2.imread("image/"+img.filename)
+            image_path = "image/"+img.filename
+            yolov3_detection(image_path)
+            height, width, channels = image.shape
+            file_name = img.filename
+            time.sleep(1)
+            total_str = ''
+            with open(image_path.split('.')[0]+'.txt', 'r') as f:
+                total_str = f.read()
+            os.remove("image/"+file_name)
+            os.remove(image_path.split('.')[0]+'.txt')
+            return 'The image you uploaded is '+file_name+'\n'+"and the image shape is " + str(height) + " * " + str(width)+'\nThe text is ' + total_str
+        else:
+            return ('The file you uploaded is not available.')
+    except:
+        return 'upload failed'
 
 
 @app.route('/upload', methods=['POST', 'GET'])  # The default method is GET.
