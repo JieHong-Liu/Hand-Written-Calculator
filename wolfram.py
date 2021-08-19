@@ -9,6 +9,8 @@ def evaluation(question):
         # question = '21=5x%2Bsin(30)'
         if('+' in question):
             question = question.replace('+', '%2B')
+        if('\lim _' in question):
+            question = question.replace('\lim _', 'lim')
         url = 'http://api.wolframalpha.com/v2/query?appid='+appid+'&input=solve+'+question
         r = requests.get(url)
 
@@ -16,10 +18,12 @@ def evaluation(question):
         json_object = json.dumps(dictionary)
         json_file = json.loads(json_object)
 
-        # print(json_file['queryresult']['pod'])
+        print(json_file['queryresult']['pod'])
         if(json_file['queryresult']['pod'][0]['@title'] == 'Indefinite integral'):
             return (json_file['queryresult']['pod'][0]['subpod']['plaintext'])
         elif(json_file['queryresult']['pod'][0]['@title'] == 'Definite integral'):
+            return (json_file['queryresult']['pod'][0]['subpod']['plaintext'])
+        elif(json_file['queryresult']['pod'][0]['@title'] == 'Limit'):
             return (json_file['queryresult']['pod'][0]['subpod']['plaintext'])
         else:
             # 'Input interpretation'
