@@ -51,9 +51,9 @@ function submit() {
     let fileField = document.querySelector('input[type="file"]');
     console.log(fileField.files[0]);
     // url = 'https://hand-write-calculator.herokuapp.com/upload';
-    let url = 'http://192.168.31.195:80/test_predict';
-    //let url = 'http://35.189.181.126:80/test_predict';
-    //let url = 'http://192.168.1.101:3000/upload';
+    //let url = 'http://192.168.31.195:80/test_predict';
+    let url = 'http://35.189.181.126:80/test_predict';
+    //let url = 'http://192.168.1.101:80/upload';
     formData.append('', fileField.files[0]);// 設定上傳的檔案
     postImage(url, formData);
     document.getElementById('resultText').innerText = judge((fileField.files[0])==undefined);
@@ -62,9 +62,9 @@ function submit() {
 
 function Evaluate(correct_or_not){ // 可以運算的地方
     
-    //let url = 'http://192.168.1.101:3000/evaluate';
-    let url = 'http://192.168.31.195:80/evaluate';
-    //let url = 'http://35.189.181.126:80/evaluate';
+    //let url = 'http://192.168.1.101:80/evaluate';
+    //let url = 'http://192.168.31.195:80/evaluate';
+    let url = 'http://35.189.181.126:80/evaluate';
     if(correct_or_not == "true")
     {
       let ans = getElementByXpath('//*[@id="resultSize"]/text()[3]').replace("The text is ","");
@@ -102,7 +102,7 @@ function Evaluate(correct_or_not){ // 可以運算的地方
 }
 function modification(thistext){//之後修改
 
-    let resultSize_text = document.getElementById('resultSize').innerText;
+    //let resultSize_text = document.getElementById('resultSize').innerText;
     let input_text = document.getElementById('input_text');
     input_text.style.display = 'inline';
     let t = getElementByXpath('//*[@id="resultSize"]/text()[3]').replace("The text is ","");
@@ -114,15 +114,24 @@ function modification(thistext){//之後修改
 
 }
     let Correct = document.getElementById("True"); //正確 
-    let modified = document.getElementById("modified");//修正後遞交
-    if(Correct)// Null的話不會去讀
-        Correct.addEventListener('click',function(){Evaluate("true");});  
-    if(modified)// Null的話不會去讀
-        modified.addEventListener('click',function(){Evaluate("false");});  
-
     let Modify = document.getElementById("modify");//修正
+    if(Correct)// Null的話不會去讀
+        Correct.addEventListener('click',function(){Evaluate("true"); 
+                                  Correct.style.display='none';
+                                  Modify.style.display='none';    });    
     if(Modify)// Null的話不會去讀
-        Modify.addEventListener('click',function(){modification()}); 
+        Modify.addEventListener('click',function(){modification(); 
+                                  Correct.style.display='none'
+                                  Modify.style.display='none';    }); 
+
+    let modified = document.getElementById("modified");//修正後遞交
+    if(modified)// Null的話不會去讀
+        modified.addEventListener('click',function(){
+                                  Evaluate("false");
+                                  modified.style.display='none';
+                                  document.getElementById('input_text').style.display='none';
+                                  document.getElementById('input_text_name').innerText="";
+                                  });
 
     let fileinput = document.getElementById("fileinput");//上傳圖片
     fileinput.addEventListener('change',function(){showImg(this)}); //當有事件發生改變，執行相應的函式  
@@ -130,7 +139,11 @@ function modification(thistext){//之後修改
     let submitt = document.getElementById("submitt");//遞交手寫資料
     let alert_text = document.getElementById("alert_text"); //警示文字
     if(submitt)// Null的話不會去讀
-        submitt.addEventListener('click',function(){submit(); 
+        submitt.addEventListener('click',function(){
+          submit(); 
           alert_text.style.display = 'block';
-          setTimeout(function() { alert_text.style.display = 'none';}, 2500);//過了4秒，display為none 
+          setTimeout(function() { alert_text.style.display = 'none';}, 2500);//過了2.5秒，display為none 
+          document.getElementById('resultSize').innerText = "";
+          document.getElementById('detectionResult').innerText = "";
+          document.getElementById('CalculateResult').innerText = "";
         });
