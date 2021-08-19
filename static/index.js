@@ -7,6 +7,10 @@ function postImage(url,formData){
       return response.text()
     }).then( (response) => {
       document.getElementById('resultSize').innerText = (response);
+      MathJax.typeset()
+      let input_text = document.getElementById('input_text');
+      let t = (response).replace("The answer is \\(","").replace("\\)","");
+      input_text.value = t;
     })
 }
 
@@ -42,10 +46,9 @@ function showImg(thisimg) { // 顯示上傳的圖片
     showimg.style.display = 'block';
 }
 
-function getElementByXpath(path) {
-    return document.evaluate(path, document, null, XPathResult.STRING_TYPE, null).stringValue;
-}
-
+// function getElementByXpath(path) {
+//     return document.evaluate(path, document, null, XPathResult.STRING_TYPE, null).stringValue;
+// }
 function submit() {
     let formData = new FormData();
     let fileField = document.querySelector('input[type="file"]');
@@ -60,20 +63,17 @@ function submit() {
     
 }
 
-function Evaluate(correct_or_not){ // 可以運算的地方
+function Evaluate(){ // 可以運算的地方
     
     //let url = 'http://192.168.1.101:80/evaluate';
     //let url = 'http://192.168.31.195:80/evaluate';
     let url = 'http://35.189.181.126:80/evaluate';
-    if(correct_or_not == "true")
-    {
-      let ans = getElementByXpath('//*[@id="resultSize"]/text()[3]').replace("The text is ","");
-      document.getElementById('detectionResult').innerText = ans;
-    }
-    else
-    {
-      document.getElementById('detectionResult').innerText = (document.getElementById('input_text').value)
-    }
+
+    // let ans = getElementByXpath('//*[@id="resultSize"]/text()[3]').replace("The text is ","");
+    // document.getElementById('detectionResult').innerText = ans;
+    document.getElementById('detectionResult').innerText = '\\(' + (document.getElementById('input_text').value) + '\\)'
+    MathJax.typeset();
+
     let str = document.getElementById('detectionResult').innerText;
     let newStr = str;
     let count = 0;
@@ -97,16 +97,17 @@ function Evaluate(correct_or_not){ // 可以運算的地方
       }).then(function(response) {
         return response.text()
       }).then( (response) => {
-        document.getElementById('CalculateResult').innerText = (response);
+        document.getElementById('CalculateResult').innerText = "\\(" + (response) + "\\)";
+        MathJax.typeset()
       })
 }
 function modification(thistext){//之後修改
 
     //let resultSize_text = document.getElementById('resultSize').innerText;
-    let input_text = document.getElementById('input_text');
+    //let input_text = document.getElementById('input_text');
     input_text.style.display = 'inline';
-    let t = getElementByXpath('//*[@id="resultSize"]/text()[3]').replace("The text is ","");
-    input_text.value = t;
+    //let t = getElementByXpath('//*[@id="resultSize"]/text()[3]').replace("The text is ","");
+    //input_text.value = t;
     input_text_name = document.getElementById('input_text_name');
     input_text_name.innerText = "修改輸入";
     modified = document.getElementById('modified');
@@ -116,7 +117,7 @@ function modification(thistext){//之後修改
     let Correct = document.getElementById("True"); //正確 
     let Modify = document.getElementById("modify");//修正
     if(Correct)// Null的話不會去讀
-        Correct.addEventListener('click',function(){Evaluate("true"); 
+        Correct.addEventListener('click',function(){Evaluate(); 
                                   Correct.style.display='none';
                                   Modify.style.display='none';    });    
     if(Modify)// Null的話不會去讀
@@ -127,7 +128,7 @@ function modification(thistext){//之後修改
     let modified = document.getElementById("modified");//修正後遞交
     if(modified)// Null的話不會去讀
         modified.addEventListener('click',function(){
-                                  Evaluate("false");
+                                  Evaluate();
                                   modified.style.display='none';
                                   document.getElementById('input_text').style.display='none';
                                   document.getElementById('input_text_name').innerText="";
@@ -141,9 +142,10 @@ function modification(thistext){//之後修改
     if(submitt)// Null的話不會去讀
         submitt.addEventListener('click',function(){
           submit(); 
-          alert_text.style.display = 'block';
-          setTimeout(function() { alert_text.style.display = 'none';}, 2500);//過了2.5秒，display為none 
+          alert_text.style.display = 'block'; 
+          setTimeout(function() { alert_text.style.display = 'none';}, 2500);//過了2.5秒，display為none
           document.getElementById('resultSize').innerText = "";
           document.getElementById('detectionResult').innerText = "";
           document.getElementById('CalculateResult').innerText = "";
+          MathJax.typeset();
         });

@@ -7,6 +7,7 @@ from flask_cors import CORS
 from app import app
 from wolfram import evaluation
 from yolov3.yolo_detection_images import *
+import markdown
 
 # route to open the index.html
 
@@ -46,7 +47,7 @@ def yolo_predictions():
                 total_str = f.read()
             os.remove("image/"+file_name)
             os.remove(image_path.split('.')[0]+'.txt')
-            return 'The image you uploaded is '+file_name+'\n'+"and the image shape is " + str(height) + " * " + str(width)+'\nThe text is ' + total_str
+            return 'The answer is ' + '\\(' + total_str + '\\)' 
         else:
             return ('The file you uploaded is not available.')
     except:
