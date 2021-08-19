@@ -11,6 +11,10 @@ def evaluation(question):
             question = question.replace('+', '%2B')
         if('\lim _' in question):
             question = question.replace('\lim _', 'lim')
+        if('ightarrow' in question):
+            question = question.replace('ightarrow', '\\rightarrow')
+        if('rac' in question):
+            question = question.replace('rac', '\\frac')
         url = 'http://api.wolframalpha.com/v2/query?appid='+appid+'&input=solve+'+question
         r = requests.get(url)
 
@@ -31,3 +35,7 @@ def evaluation(question):
             return (json_file['queryresult']['pod'][1]['subpod']['plaintext'])
     except:
         return question
+
+
+print(evaluation(
+    'lim  { x \rightarrow \infty } \frac { 2 x ^ { 3 } + 5 } { 3 x ^ { 2 } + 1 }'))
