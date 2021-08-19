@@ -51,8 +51,8 @@ function submit() {
     let fileField = document.querySelector('input[type="file"]');
     console.log(fileField.files[0]);
     // url = 'https://hand-write-calculator.herokuapp.com/upload';
-    //let url = 'http://192.168.31.195:80/test_predict';
-    let url = 'http://35.189.181.126:80/test_predict';
+    let url = 'http://192.168.31.195:80/test_predict';
+    //let url = 'http://35.189.181.126:80/test_predict';
     //let url = 'http://192.168.1.101:3000/upload';
     formData.append('', fileField.files[0]);// 設定上傳的檔案
     postImage(url, formData);
@@ -63,8 +63,8 @@ function submit() {
 function Evaluate(correct_or_not){ // 可以運算的地方
     
     //let url = 'http://192.168.1.101:3000/evaluate';
-    //let url = 'http://192.168.31.195:80/evaluate';
-    let url = 'http://35.189.181.126:80/evaluate';
+    let url = 'http://192.168.31.195:80/evaluate';
+    //let url = 'http://35.189.181.126:80/evaluate';
     if(correct_or_not == "true")
     {
       let ans = getElementByXpath('//*[@id="resultSize"]/text()[3]').replace("The text is ","");
