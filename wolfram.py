@@ -26,4 +26,5 @@ def evaluation(question):
     except:
         return question
 
-# print(evaluation('21=5x%2Bsin(30)'))
+
+# print(evaluation('1 + 2 / 5 \\times 3'))

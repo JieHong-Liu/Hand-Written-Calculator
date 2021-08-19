@@ -8,7 +8,7 @@ from flask_cors import CORS
 from app import app
 from wolfram import evaluation
 from yolov3.yolo_detection_images import *
-
+from mathpix import *
 # route to open the index.html
 
 
@@ -28,6 +28,26 @@ def evaluate():
         return question
     else:
         return ans
+
+
+@app.route('/super_predict', methods=['GET', 'POST'])
+def super_prediction():
+    try:
+        img = request.files.get('')
+        if(allowDataFormat(img)):
+            img.save('image/'+img.filename)
+            image = cv2.imread("image/"+img.filename)
+            image_path = "image/"+img.filename
+            total_str = precise_detection(image_path)
+            height, width, channels = image.shape
+            file_name = img.filename
+            time.sleep(1)
+            os.remove("image/"+file_name)
+            return 'The image you uploaded is '+file_name+'\n'+"and the image shape is " + str(height) + " * " + str(width)+'\nThe text is ' + total_str
+        else:
+            return ('The file you uploaded is not available.')
+    except:
+        return 'upload failed'
 
 
 @app.route('/test_predict', methods=['GET', 'POST'])
@@ -52,6 +72,7 @@ def yolo_predictions():
             return ('The file you uploaded is not available.')
     except:
         return 'upload failed'
+
 
 def allowDataFormat(image):
     # restrict the upload file.
