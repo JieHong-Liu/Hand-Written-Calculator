@@ -20,8 +20,14 @@ def upload_home():
 @app.route('/evaluate', methods=['GET', 'POST'])
 def evaluate():
     question = request.values.get('question')  # pass js text to backend
-    print(question)
-    return evaluation(question)
+    try:
+        ans = evaluation(question)
+    except:
+        ans = question
+    if(ans == None):
+        return question
+    else:
+        return ans
 
 
 @app.route('/test_predict', methods=['GET', 'POST'])
