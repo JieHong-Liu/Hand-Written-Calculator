@@ -18,12 +18,12 @@ def evaluation(question):
 
         # print(json_file['queryresult']['pod'])
         if(json_file['queryresult']['pod'][0]['@title'] == 'Indefinite integral'):
-            return (json_file['queryresult']['pod'][0])
+            return (json_file['queryresult']['pod'][0]['subpod']['plaintext'])
+        elif(json_file['queryresult']['pod'][0]['@title'] == 'Definite integral'):
+            return (json_file['queryresult']['pod'][0]['subpod']['plaintext'])
         else:
             # 'Input interpretation'
             # dircet show answer without calculating
             return (json_file['queryresult']['pod'][1]['subpod']['plaintext'])
     except:
         return question
-
-# print(evaluation('21=5x%2Bsin(30)'))

@@ -9,7 +9,7 @@ function postImage(url,formData){
       document.getElementById('resultSize').innerText = (response);
       MathJax.typeset()
       let input_text = document.getElementById('input_text');
-      let t = (response).replace("The answer is \\(","").replace("\\)","");
+      let t = (response).replace("The quesion is \\(","").replace("\\)","");
       input_text.value = t;
     })
 }
@@ -54,9 +54,9 @@ function submit() {
     let fileField = document.querySelector('input[type="file"]');
     console.log(fileField.files[0]);
     // url = 'https://hand-write-calculator.herokuapp.com/upload';
-    //let url = 'http://192.168.31.195:80/test_predict';
-    let url = 'http://35.189.181.126:80/test_predict';
-    //let url = 'http://192.168.1.101:80/upload';
+    //let url = 'http://192.168.31.195:80/super_predict';
+    let url = 'http://35.189.181.126:80/super_predict';
+    // let url = 'http://192.168.1.101:80/super_predict';
     formData.append('', fileField.files[0]);// 設定上傳的檔案
     postImage(url, formData);
     document.getElementById('resultText').innerText = judge((fileField.files[0])==undefined);
@@ -65,7 +65,7 @@ function submit() {
 
 function Evaluate(){ // 可以運算的地方
     
-    //let url = 'http://192.168.1.101:80/evaluate';
+    // let url = 'http://192.168.1.101:80/evaluate';
     //let url = 'http://192.168.31.195:80/evaluate';
     let url = 'http://35.189.181.126:80/evaluate';
 

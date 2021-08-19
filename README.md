@@ -87,7 +87,7 @@
     + [Heroku教學](https://www.youtube.com/watch?v=wWRYBUzEG6E&ab_channel=%E5%BD%AD%E5%BD%AD%E7%9A%84%E8%AA%B2%E7%A8%8B)
     + [Fetch - Web APIs](https://developer.mozilla.org/zh-TW/docs/Web/API/Fetch_API/Using_Fetch)
     + [JavaScript](https://ithelp.ithome.com.tw/articles/10213148)
-
+    + https://ithelp.ithome.com.tw/articles/10252383
 
 
 $\int sin(x) dx$
