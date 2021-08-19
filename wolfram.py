@@ -37,5 +37,5 @@ def evaluation(question):
         return question
 
 
-print(evaluation(
-    'lim  { x \rightarrow \infty } \frac { 2 x ^ { 3 } + 5 } { 3 x ^ { 2 } + 1 }'))
+# print(evaluation(
+#     'lim  { x \rightarrow \infty } \frac { 2 x ^ { 3 } + 5 } { 3 x ^ { 2 } + 1 }'))

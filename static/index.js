@@ -88,7 +88,8 @@ function Evaluate(){ // 可以運算的地方
     {
       newStr = newStr.replace('+','%2B');
     }
-
+    newStr = newStr.replace('\frac','\\frac')
+    newStr = newStr.replace('\right','\\right')
     let math_expresion = new FormData();
     math_expresion.append('question',newStr);
     fetch (url,{
