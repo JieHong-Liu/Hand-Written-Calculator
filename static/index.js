@@ -52,7 +52,7 @@ function submit() {
     console.log(fileField.files[0]);
     // url = 'https://hand-write-calculator.herokuapp.com/upload';
     //let url = 'http://192.168.31.195:80/test_predict';
-    let url = 'http://35.189.181.126:80/super_predict';
+    let url = 'http://35.189.181.126:80/test_predict';
     // let url = 'http://192.168.1.101:80/super_predict';
     formData.append('', fileField.files[0]);// 設定上傳的檔案
     postImage(url, formData);

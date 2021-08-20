@@ -9,6 +9,7 @@ def evaluation(question):
         # question = '21=5x%2Bsin(30)'
         if('+' in question):
             question = question.replace('+', '%2B')
+        print(question)
         url = 'http://api.wolframalpha.com/v2/query?appid='+appid+'&input=solve+'+question
         r = requests.get(url)
 
