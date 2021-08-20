@@ -9,12 +9,13 @@ def evaluation(question):
         # question = '21=5x%2Bsin(30)'
         if('+' in question):
             question = question.replace('+', '%2B')
-        if('\lim _' in question):
-            question = question.replace('\lim _', 'lim')
-        if('ightarrow' in question):
-            question = question.replace('ightarrow', '\\rightarrow')
-        if('rac' in question):
-            question = question.replace('rac', '\\frac')
+        if('{' in question):
+            question = question.replace('{', '{(')
+        if('}' in question):
+            question = question.replace('}', ')}')
+
+        print(question)
+
         url = 'http://api.wolframalpha.com/v2/query?appid='+appid+'&input=solve+'+question
         r = requests.get(url)
 
@@ -29,6 +30,8 @@ def evaluation(question):
             return (json_file['queryresult']['pod'][0]['subpod']['plaintext'])
         elif(json_file['queryresult']['pod'][0]['@title'] == 'Limit'):
             return (json_file['queryresult']['pod'][0]['subpod']['plaintext'])
+        elif(json_file['queryresult']['pod'][0]['@title'] == 'Input interpretation'):
+            return (json_file['queryresult']['pod'][1]['subpod'][0]['plaintext'])
         else:
             # 'Input interpretation'
             # dircet show answer without calculating

@@ -9,7 +9,7 @@ function postImage(url,formData){
       document.getElementById('resultSize').innerText = (response);
       MathJax.typeset()
       let input_text = document.getElementById('input_text');
-      let t = (response).replace("The quesion is \\(","").replace("\\)","");
+      let t = (response).replace("The question is \\(","").replace("\\)","");
       input_text.value = t;
     })
 }
@@ -54,9 +54,9 @@ function submit() {
     let fileField = document.querySelector('input[type="file"]');
     console.log(fileField.files[0]);
     // url = 'https://hand-write-calculator.herokuapp.com/upload';
-    //let url = 'http://192.168.31.195:80/super_predict';
-    let url = 'http://35.189.181.126:80/super_predict';
-    // let url = 'http://192.168.1.101:80/super_predict';
+    // let url = 'http://192.168.31.195:80/super_predict';
+    // let url = 'http://35.189.181.126:80/super_predict';
+    let url = 'http://192.168.1.101:80/test_predict';
     formData.append('', fileField.files[0]);// 設定上傳的檔案
     postImage(url, formData);
     document.getElementById('resultText').innerText = judge((fileField.files[0])==undefined);
@@ -65,9 +65,9 @@ function submit() {
 
 function Evaluate(){ // 可以運算的地方
     
-    // let url = 'http://192.168.1.101:80/evaluate';
+    let url = 'http://192.168.1.101:80/evaluate';
     //let url = 'http://192.168.31.195:80/evaluate';
-    let url = 'http://35.189.181.126:80/evaluate';
+    // let url = 'http://35.189.181.126:80/evaluate';
 
     // let ans = getElementByXpath('//*[@id="resultSize"]/text()[3]').replace("The text is ","");
     // document.getElementById('detectionResult').innerText = ans;
@@ -88,8 +88,6 @@ function Evaluate(){ // 可以運算的地方
     {
       newStr = newStr.replace('+','%2B');
     }
-    newStr = newStr.replace('\frac','\\frac')
-    newStr = newStr.replace('\right','\\right')
     let math_expresion = new FormData();
     math_expresion.append('question',newStr);
     fetch (url,{
