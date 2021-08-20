@@ -8,12 +8,12 @@ def evaluation(question):
         appid = 'L6A69L-RRJU9794TQ'
         # question = '21=5x%2Bsin(30)'
         if('+' in question):
-            question = question.replace('+', '%2B') #http://api.wolframalpha.com/v2/query?appid=L6A69L-RRJU9794TQ&input=solve+
+            question = question.replace('+', '%2B')
         if('\lim _' in question):
             question = question.replace('\lim _', 'lim_') # 必須加入不然會有bug
+        print(question)
         url = 'http://api.wolframalpha.com/v2/query?appid='+appid+'&input=solve+'+question
         r = requests.get(url)
-
         dictionary = xmltodict.parse(r.text)
         json_object = json.dumps(dictionary)
         json_file = json.loads(json_object)
@@ -25,6 +25,8 @@ def evaluation(question):
             return (json_file['queryresult']['pod'][0]['subpod']['plaintext'])
         elif(json_file['queryresult']['pod'][0]['@title'] == 'Limit'):
             return (json_file['queryresult']['pod'][0]['subpod']['plaintext'])
+        elif(json_file['queryresult']['pod'][0]['@title'] == 'Input interpretation'):
+            return (json_file['queryresult']['pod'][1]['subpod'][0]['plaintext'])
         else:
             # 'Input interpretation'
             # dircet show answer without calculating

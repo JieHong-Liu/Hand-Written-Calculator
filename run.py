@@ -66,8 +66,7 @@ def yolo_predictions():
                 total_str = f.read()
             os.remove("image/"+file_name)
             os.remove(image_path.split('.')[0]+'.txt')
-            return 'The question is \\(' + total_str + '\\)'  
-            # return 'The question is '+ total_str   
+            return 'The question is \\(' + total_str + '\\)'
         else:
             return ('The file you uploaded is not available.')
     except:
