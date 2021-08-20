@@ -17,9 +17,15 @@ def evaluation(question):
         json_object = json.dumps(dictionary)
         json_file = json.loads(json_object)
 
-        # print(json_file['queryresult']['pod'])
+        print(json_file['queryresult']['pod'])
         if(json_file['queryresult']['pod'][0]['@title'] == 'Indefinite integral'):
-            return (json_file['queryresult']['pod'][0])
+            return (json_file['queryresult']['pod'][0]['subpod']['plaintext'])
+        elif(json_file['queryresult']['pod'][0]['@title'] == 'Definite integral'):
+            return (json_file['queryresult']['pod'][0]['subpod']['plaintext'])
+        elif(json_file['queryresult']['pod'][0]['@title'] == 'Limit'):
+            return (json_file['queryresult']['pod'][0]['subpod']['plaintext'])
+        elif(json_file['queryresult']['pod'][0]['@title'] == 'Input interpretation'):
+            return (json_file['queryresult']['pod'][1]['subpod'][0]['plaintext'])
         else:
             # 'Input interpretation'
             # dircet show answer without calculating
@@ -28,4 +34,5 @@ def evaluation(question):
         return question
 
 
-# print(evaluation('1 + 2 / 5 \\times 3'))
+# print(evaluation(
+#     'lim  { x \rightarrow \infty } \frac { 2 x ^ { 3 } + 5 } { 3 x ^ { 2 } + 1 }'))

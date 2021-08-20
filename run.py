@@ -1,7 +1,6 @@
 # -*- coding: UTF-8 -*-
 import os
 import numpy as np
-import cv2
 import time
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
@@ -43,7 +42,7 @@ def super_prediction():
             file_name = img.filename
             time.sleep(1)
             os.remove("image/"+file_name)
-            return 'The image you uploaded is '+file_name+'\n'+"and the image shape is " + str(height) + " * " + str(width)+'\nThe text is ' + total_str
+            return 'The question is \\(' + total_str + '\\)'
         else:
             return ('The file you uploaded is not available.')
     except:
@@ -59,7 +58,7 @@ def yolo_predictions():
             image = cv2.imread("image/"+img.filename)
             image_path = "image/"+img.filename
             yolov3_detection(image_path)
-            height, width, channels = image.shape
+            height, width, channel = image.shape
             file_name = img.filename
             time.sleep(1)
             total_str = ''
@@ -67,7 +66,7 @@ def yolo_predictions():
                 total_str = f.read()
             os.remove("image/"+file_name)
             os.remove(image_path.split('.')[0]+'.txt')
-            return 'The image you uploaded is '+file_name+'\n'+"and the image shape is " + str(height) + " * " + str(width)+'\nThe text is ' + total_str
+            return 'The question is \\(' + total_str + '\\)'
         else:
             return ('The file you uploaded is not available.')
     except:
@@ -86,7 +85,7 @@ def allowDataFormat(image):
 
 if __name__ == '__main__':
     # host 0.0.0.0 will auto connect
-    app.run(host='0.0.0.0', port=80, debug=False)
+    app.run(host='0.0.0.0', port=80, debug=True)
 
 # if __name__ == '__main__':
 #     app.run(host='0.0.0.0', port=3000, debug=False)

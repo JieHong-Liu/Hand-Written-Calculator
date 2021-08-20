@@ -9,7 +9,7 @@ def yolov3_detection(image_path):
     # modelConfiguration = 'yolov3/cfg/yolov3.cfg'
     # modelWeights = 'yolov3/weight/yolov3.weights'
     # labelsPath = 'yolov3/data/coco.names'
-
+    
     modelConfiguration = 'yolov3/cfg/yolov4-HWC.cfg'
     modelWeights = 'yolov3/weight/HWC.weights'
     labelsPath = 'yolov3/data/HWC.names'
