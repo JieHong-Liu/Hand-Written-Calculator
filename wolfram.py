@@ -8,13 +8,9 @@ def evaluation(question):
         appid = 'L6A69L-RRJU9794TQ'
         # question = '21=5x%2Bsin(30)'
         if('+' in question):
-            question = question.replace('+', '%2B')
+            question = question.replace('+', '%2B') #http://api.wolframalpha.com/v2/query?appid=L6A69L-RRJU9794TQ&input=solve+
         if('\lim _' in question):
-            question = question.replace('\lim _', 'lim')
-        if('ightarrow' in question):
-            question = question.replace('ightarrow', '\\rightarrow')
-        if('rac' in question):
-            question = question.replace('rac', '\\frac')
+            question = question.replace('\lim _', 'lim_') # 必須加入不然會有bug
         url = 'http://api.wolframalpha.com/v2/query?appid='+appid+'&input=solve+'+question
         r = requests.get(url)
 
