@@ -77,19 +77,19 @@ function Evaluate(){ // 可以運算的地方
     MathJax.typeset();
 
     let str = document.getElementById('detectionResult').innerText;
-    let newStr = str;
-    let count = 0;
-    for (let i = 0 ; i < str.length; i++)
-    {
-      if(str[i] == '+')
-      {
-        count = count+1;
-      }
-    }
-    for (let j = 0; j < count; j++)
-    {
-      newStr = newStr.replace('+','%2B');
-    }
+    // let count = 0;
+    // for (let i = 0 ; i < str.length; i++)
+    // {
+    //   if(str[i] == '+')
+    //   {
+    //     count = count+1;
+    //   }
+    // }
+    // for (let j = 0; j < count; j++)
+    // {
+    //   newStr = newStr.replace('+','%2B');
+    // }
+    let newStr = encodeURIComponent(str)
     let math_expresion = new FormData();
     math_expresion.append('question',newStr);
     fetch (url,{

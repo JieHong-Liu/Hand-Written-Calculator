@@ -16,6 +16,13 @@ def upload_home():
     return render_template("index.html")
 
 
+@app.route('/test_form', methods=['GET', 'POST'])
+def test_math():
+    postData = request.values.get('postData')
+    print(postData)
+    return 'OK'
+
+
 @app.route('/evaluate', methods=['GET', 'POST'])
 def evaluate():
     question = request.values.get('question')  # pass js text to backend
