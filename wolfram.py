@@ -8,14 +8,13 @@ def evaluation(question):
     try:
         appid = 'L6A69L-RRJU9794TQ'
         # question = '21=5x%2Bsin(30)'
-        # if('+' in question):
-        #     question = question.replace('+', '%2B')
-        question = parse.quote(question.encode("utf-8"))
 
+        if('\lim _' in question):
+            question = question.replace('\lim _', 'lim_')  # 必須加入不然會有bug
+        question = parse.quote(question.encode("utf-8"))
         print(question)
         url = 'http://api.wolframalpha.com/v2/query?appid='+appid+'&input=solve+'+question
         r = requests.get(url)
-
         dictionary = xmltodict.parse(r.text)
         json_object = json.dumps(dictionary)
         json_file = json.loads(json_object)

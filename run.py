@@ -49,7 +49,7 @@ def super_prediction():
             file_name = img.filename
             time.sleep(1)
             os.remove("image/"+file_name)
-            return 'The question is \\(' + total_str + '\\)'
+            return 'The question is \\(' + total_str + '\\)' 
         else:
             return ('The file you uploaded is not available.')
     except:

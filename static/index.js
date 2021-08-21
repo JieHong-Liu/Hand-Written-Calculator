@@ -7,7 +7,7 @@ function postImage(url,formData){
       return response.text()
     }).then( (response) => {
       document.getElementById('resultSize').innerText = (response);
-      MathJax.typeset()
+      MathJax.typeset();
       let input_text = document.getElementById('input_text');
       let t = (response).replace("The question is \\(","").replace("\\)","");
       input_text.value = t;
@@ -57,7 +57,7 @@ function submit() {
     //let url = 'http://192.168.31.195:80/test_predict';
     let url = 'http://35.189.181.126:80/test_predict';
     // let url = 'http://192.168.1.101:80/super_predict';
-    // let url = 'http://192.168.31.195:80/super_predict';
+    //let url = 'http://192.168.31.195:80/test_predict';
     // let url = 'http://35.189.181.126:80/super_predict';
     formData.append('', fileField.files[0]);// 設定上傳的檔案
     postImage(url, formData);
@@ -67,9 +67,9 @@ function submit() {
 
 function Evaluate(){ // 可以運算的地方
     
-    let url = 'http://192.168.1.101:80/evaluate';
+    // let url = 'http://192.168.1.101:80/evaluate';
     //let url = 'http://192.168.31.195:80/evaluate';
-    // let url = 'http://35.189.181.126:80/evaluate';
+    let url = 'http://35.189.181.126:80/evaluate';
 
     // let ans = getElementByXpath('//*[@id="resultSize"]/text()[3]').replace("The text is ","");
     // document.getElementById('detectionResult').innerText = ans;
@@ -77,19 +77,12 @@ function Evaluate(){ // 可以運算的地方
     MathJax.typeset();
 
     let str = document.getElementById('detectionResult').innerText;
-    // let count = 0;
-    // for (let i = 0 ; i < str.length; i++)
-    // {
-    //   if(str[i] == '+')
-    //   {
-    //     count = count+1;
-    //   }
-    // }
-    // for (let j = 0; j < count; j++)
-    // {
-    //   newStr = newStr.replace('+','%2B');
-    // }
+
+    
+    let str = (document.getElementById('input_text').value); // \lim _ { x \rightarrow 3 } 2 x + 1
+    //str = document.getElementById('detectionResult').innerText;//lim(x→3)2x%2B1
     let newStr = encodeURIComponent(str)
+
     let math_expresion = new FormData();
     math_expresion.append('question',newStr);
     fetch (url,{
@@ -98,11 +91,12 @@ function Evaluate(){ // 可以運算的地方
       }).then(function(response) {
         return response.text()
       }).then( (response) => {
+        console.log("response: ",response)
         document.getElementById('CalculateResult').innerText = "\\(" + (response) + "\\)";
         MathJax.typeset()
       })
 }
-function modification(thistext){//之後修改
+function modification(){//之後修改
 
     //let resultSize_text = document.getElementById('resultSize').innerText;
     //let input_text = document.getElementById('input_text');
@@ -141,11 +135,6 @@ function modification(thistext){//之後修改
     let submitt = document.getElementById("submitt");//遞交手寫資料
     let alert_text = document.getElementById("alert_text"); //警示文字
     if(submitt)// Null的話不會去讀
-        submitt.addEventListener('click',function(){submit(); 
-          alert_text.style.display = 'block';
-          setTimeout(function() { alert_text.style.display = 'none';}, 2500);//過了4秒，display為none 
-        });
-	/*
         submitt.addEventListener('click',function(){
           submit(); 
           alert_text.style.display = 'block'; 
@@ -153,6 +142,4 @@ function modification(thistext){//之後修改
           document.getElementById('resultSize').innerText = "";
           document.getElementById('detectionResult').innerText = "";
           document.getElementById('CalculateResult').innerText = "";
-          MathJax.typeset();
         });
-	*/
