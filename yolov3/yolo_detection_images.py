@@ -14,6 +14,9 @@ def yolov3_detection(image_path):
     modelWeights = 'yolov3/weight/HWC.weights'
     labelsPath = 'yolov3/data/HWC.names'
 
+    # modelConfiguration = 'yolov3/cfg/yolov4-obj.cfg'
+    # modelWeights = 'yolov3/weight/yolov4-obj_9500.weights'
+    # labelsPath = 'yolov3/data/HWC.names'
     labels = open(labelsPath).read().strip().split('\n')
 
     np.random.seed(10)

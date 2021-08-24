@@ -54,7 +54,7 @@ function submit() {
     let fileField = document.querySelector('input[type="file"]');
     console.log(fileField.files[0]);
     // url = 'https://hand-write-calculator.herokuapp.com/upload';
-    //let url = 'http://192.168.31.195:80/test_predict';
+    // let url = 'http://192.168.31.195:80/test_predict';
     let url = 'http://35.189.181.126:80/test_predict';
     // let url = 'http://192.168.1.101:80/super_predict';
     //let url = 'http://192.168.31.195:80/test_predict';
