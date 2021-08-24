@@ -10,6 +10,8 @@ def evaluation(question):
         # question = '21=5x%2Bsin(30)'
         # if('+' in question):
         #     question = question.replace('+', '%2B')
+        if('\lim _' in question):
+            question = question.replace('\lim _','lim_')
         question = parse.quote(question.encode("utf-8"))
 
         print(question)
@@ -39,4 +41,4 @@ def evaluation(question):
         return question
 
 
-# print(evaluation('1+2+3'))
+#print(evaluation('2^2'))

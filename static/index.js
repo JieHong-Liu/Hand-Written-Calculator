@@ -67,9 +67,9 @@ function submit() {
 
 function Evaluate(){ // 可以運算的地方
     
-    let url = 'http://192.168.1.101:80/evaluate';
+    //let url = 'http://192.168.1.101:80/evaluate';
     //let url = 'http://192.168.31.195:80/evaluate';
-    // let url = 'http://35.189.181.126:80/evaluate';
+     let url = 'http://35.189.181.126:80/evaluate';
 
     // let ans = getElementByXpath('//*[@id="resultSize"]/text()[3]').replace("The text is ","");
     // document.getElementById('detectionResult').innerText = ans;
@@ -77,18 +77,7 @@ function Evaluate(){ // 可以運算的地方
     MathJax.typeset();
 
     let str = document.getElementById('detectionResult').innerText;
-    // let count = 0;
-    // for (let i = 0 ; i < str.length; i++)
-    // {
-    //   if(str[i] == '+')
-    //   {
-    //     count = count+1;
-    //   }
-    // }
-    // for (let j = 0; j < count; j++)
-    // {
-    //   newStr = newStr.replace('+','%2B');
-    // }
+    let str = document.getElementById('input_text').value);
     let newStr = encodeURIComponent(str)
     let math_expresion = new FormData();
     math_expresion.append('question',newStr);
