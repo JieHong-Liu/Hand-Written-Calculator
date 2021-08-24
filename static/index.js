@@ -54,10 +54,10 @@ function submit() {
     let fileField = document.querySelector('input[type="file"]');
     console.log(fileField.files[0]);
     // url = 'https://hand-write-calculator.herokuapp.com/upload';
-    //let url = 'http://192.168.31.195:80/test_predict';
+    // let url = 'http://192.168.31.195:80/test_predict';
     // let url = 'http://35.189.181.126:80/test_predict';
     let url = 'http://192.168.1.101:80/test_predict';
-    // let url = 'http://192.168.31.195:80/test_predict';
+    //let url = 'http://192.168.31.195:80/test_predict';
     // let url = 'http://35.189.181.126:80/super_predict';
     formData.append('', fileField.files[0]);// 設定上傳的檔案
     postImage(url, formData);
@@ -76,13 +76,8 @@ function Evaluate(){ // 可以運算的地方
     document.getElementById('detectionResult').innerText = '\\(' + (document.getElementById('input_text').value) + '\\)'
     MathJax.typeset();
 
-    // let str = document.getElementById('detectionResult').innerText;
-
-    
-    let str = (document.getElementById('input_text').value); // \lim _ { x \rightarrow 3 } 2 x + 1
-    //str = document.getElementById('detectionResult').innerText;//lim(x→3)2x%2B1
+    let str = document.getElementById('input_text').value;
     let newStr = encodeURIComponent(str)
-
     let math_expresion = new FormData();
     math_expresion.append('question',newStr);
     fetch (url,{
