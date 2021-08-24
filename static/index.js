@@ -75,22 +75,9 @@ function Evaluate(){ // 可以運算的地方
     // document.getElementById('detectionResult').innerText = ans;
     document.getElementById('detectionResult').innerText = '\\(' + (document.getElementById('input_text').value) + '\\)'
     MathJax.typeset();
-    
-    let str = (document.getElementById('input_text').value); // \lim _ { x \rightarrow 3 } 2 x + 1
-    //str = document.getElementById('detectionResult').innerText;//lim(x→3)2x%2B1
-    let newStr = str;
-    let count = 0;
-    for (let i = 0 ; i < str.length; i++)
-    {
-      if(str[i] == '+')
-      {
-        count = count+1;
-      }
-    }
-    for (let j = 0; j < count; j++)
-    {
-      newStr = newStr.replace('+','%2B');
-    }
+
+    let str = document.getElementById('input_text').value;
+    let newStr = encodeURIComponent(str)
     let math_expresion = new FormData();
     math_expresion.append('question',newStr);
     fetch (url,{
