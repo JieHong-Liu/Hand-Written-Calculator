@@ -10,9 +10,9 @@ def evaluation(question):
         # question = '21=5x%2Bsin(30)'
         # if('+' in question):
         #     question = question.replace('+', '%2B')
-        if('\lim _' in question):
-            question = question.replace('\lim _', 'lim_')
-        question = parse.quote(question.encode("utf-8"))
+        # if('\lim _' in question):
+        #     question = question.replace('\lim _','lim_')
+        # question = parse.quote(question.encode("utf-8"))
 
         print(question)
         url = 'http://api.wolframalpha.com/v2/query?appid='+appid+'&input=solve+'+question
