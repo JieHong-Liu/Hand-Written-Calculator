@@ -8,19 +8,12 @@ def evaluation(question):
     try:
         appid = 'L6A69L-RRJU9794TQ'
         # question = '21=5x%2Bsin(30)'
-<<<<<<< HEAD
-
-        if('\lim _' in question):
-            question = question.replace('\lim _', 'lim_')  # 必須加入不然會有bug
-        question = parse.quote(question.encode("utf-8"))
-=======
         # if('+' in question):
         #     question = question.replace('+', '%2B')
         if('\lim _' in question):
-            question = question.replace('\lim _','lim_')
+            question = question.replace('\lim _', 'lim_')
         question = parse.quote(question.encode("utf-8"))
 
->>>>>>> 78020b92f07f444b4a3b10502b4c02fe9afce648
         print(question)
         url = 'http://api.wolframalpha.com/v2/query?appid='+appid+'&input=solve+'+question
         r = requests.get(url)
@@ -47,4 +40,4 @@ def evaluation(question):
         return question
 
 
-#print(evaluation('2^2'))
+# print(evaluation('2^2'))

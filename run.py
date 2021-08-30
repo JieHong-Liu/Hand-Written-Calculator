@@ -49,7 +49,7 @@ def super_prediction():
             file_name = img.filename
             time.sleep(1)
             os.remove("image/"+file_name)
-            return 'The question is \\(' + total_str + '\\)' 
+            return 'The question is \\(' + total_str + '\\)'
         else:
             return ('The file you uploaded is not available.')
     except:
@@ -77,6 +77,11 @@ def yolo_predictions():
         else:
             return ('The file you uploaded is not available.')
     except:
+        try:
+            os.remove("image/"+file_name)
+            os.remove(image_path.split('.')[0]+'.txt')
+        except:
+            pass
         return 'upload failed'
 
 
