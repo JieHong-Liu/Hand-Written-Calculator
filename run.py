@@ -49,7 +49,7 @@ def super_prediction():
             file_name = img.filename
             time.sleep(1)
             os.remove("image/"+file_name)
-            return 'The question is \\(' + total_str + '\\)' 
+            return 'The question is \\(' + total_str + '\\)'
         else:
             return ('The file you uploaded is not available.')
     except:
@@ -58,26 +58,31 @@ def super_prediction():
 
 @app.route('/test_predict', methods=['GET', 'POST'])
 def yolo_predictions():
-    try:
-        img = request.files.get('')
-        if(allowDataFormat(img)):
-            img.save('image/'+img.filename)
-            image = cv2.imread("image/"+img.filename)
-            image_path = "image/"+img.filename
-            yolov3_detection(image_path)
-            height, width, channel = image.shape
-            file_name = img.filename
-            time.sleep(1)
-            total_str = ''
-            with open(image_path.split('.')[0]+'.txt', 'r') as f:
-                total_str = f.read()
-            os.remove("image/"+file_name)
-            os.remove(image_path.split('.')[0]+'.txt')
-            return 'The question is \\(' + total_str + '\\)'
-        else:
-            return ('The file you uploaded is not available.')
-    except:
-        return 'upload failed'
+    # try:
+    img = request.files.get('')
+    if(allowDataFormat(img)):
+        img.save('image/'+img.filename)
+        image = cv2.imread("image/"+img.filename)
+        image_path = "image/"+img.filename
+        yolov3_detection(image_path)
+        height, width, channel = image.shape
+        file_name = img.filename
+        time.sleep(1)
+        total_str = ''
+        with open(image_path.split('.')[0]+'.txt', 'r') as f:
+            total_str = f.read()
+        os.remove("image/"+file_name)
+        os.remove(image_path.split('.')[0]+'.txt')
+        return 'The question is \\(' + total_str + '\\)'
+    else:
+        return ('The file you uploaded is not available.')
+    # except:
+    #     try:
+    #         os.remove("image/"+file_name)
+    #         os.remove(image_path.split('.')[0]+'.txt')
+    #     except:
+    #         pass
+    #     return 'upload failed'
 
 
 def allowDataFormat(image):

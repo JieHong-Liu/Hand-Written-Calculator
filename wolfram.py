@@ -10,11 +10,14 @@ def evaluation(question):
         # question = '21=5x%2Bsin(30)'
         # if('+' in question):
         #     question = question.replace('+', '%2B')
-        if('\lim _' in question):
-            question = question.replace('\lim _','lim_')
+        # if('\lim _' in question):
+        #     question = question.replace('\lim _','lim_')
+        print('original: ', question)
+        question = question.replace(' ', '')
         question = parse.quote(question.encode("utf-8"))
 
-        print(question)
+        print('after encode: ', question)
+
         url = 'http://api.wolframalpha.com/v2/query?appid='+appid+'&input=solve+'+question
         r = requests.get(url)
         dictionary = xmltodict.parse(r.text)
@@ -40,4 +43,8 @@ def evaluation(question):
         return question
 
 
+<<<<<<< HEAD
 # print(evaluation('4^{2^{2}}+1'))
+=======
+# print(evaluation('2 x 8 + 7 / 6'))
+>>>>>>> cafcbfa4ff3bdf9a5332b56b475f42b2d2b663aa

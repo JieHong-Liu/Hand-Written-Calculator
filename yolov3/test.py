@@ -1,21 +1,38 @@
 import numpy as np
 import cv2
 import requests
-from yolov3.position import position_correction
+from position import position_correction
+# def position_correction(detection_Objects,file_name):
+
+#     x_min_sort(detection_Objects)
+#     for d_object in detection_Objects:
+#         if(float(d_object[5]) > 0):
+#             print(d_object[0],end=' ')
+
+#     # with open(file_name+'.txt', 'w') as file:
+#     #     for d_object in detection_Objects:
+#     #         if(float(d_object[5]) > 0):
+#     #             file.write(d_object[0])
+# def x_min_sort(detection_Objects):
+# for i in range(len(detection_Objects) - 1):
+#     for j in range(len(detection_Objects) - i - 1):
+#         if(detection_Objects[j][1] > detection_Objects[j+1][1]):
+#             detection_Objects[j], detection_Objects[j+1] = detection_Objects[j+1], detection_Objects[j]
 
 
 def yolov3_detection(image_path):
     confidenceThreshold = 0.5
     NMSThreshold = 0.3
-    modelConfiguration = 'yolov3/cfg/yolov4-HWC.cfg'
-    modelWeights = 'yolov3/weight/yolov4-obj_15600.weights'
-    labelsPath = 'yolov3/data/HWC.names'
-    # modelConfiguration = 'cfg/yolov4-obj.cfg'
-    # modelWeights = 'weight/yolov4-obj_11600.weights'
-    # labelsPath = 'data/obj.names'
+    # modelConfiguration = 'cfg/yolov4-HWC.cfg'
+    # modelWeights = 'weight/yolov4-HWC_last.weights'
+    # labelsPath = 'data/HWC.names'
+
+    modelConfiguration = 'cfg/yolov4-obj.cfg'
+    modelWeights = 'weight/yolov4-obj_15600.weights'
+    labelsPath = 'data/HWC.names'
 
     labels = open(labelsPath).read().strip().split('\n')
-    print(image_path)
+
     np.random.seed(10)
     COLORS = np.random.randint(0, 255, size=(len(labels), 3), dtype="uint8")
 
@@ -24,6 +41,7 @@ def yolov3_detection(image_path):
     #image = cv2.imread('yolov3/images/good.jpeg')
     image = cv2.imread(image_path)
     (H, W) = image.shape[:2]
+
     # Determine output layer names
     layerName = net.getLayerNames()
     layerName = [layerName[i[0] - 1] for i in net.getUnconnectedOutLayers()]
@@ -32,6 +50,7 @@ def yolov3_detection(image_path):
         image, 1 / 255.0, (416, 416), swapRB=True, crop=False)
     net.setInput(blob)
     layersOutputs = net.forward(layerName)
+
     boxes = []
     confidences = []
     classIDs = []
@@ -54,6 +73,7 @@ def yolov3_detection(image_path):
     # Apply Non Maxima Suppression
     detectionNMS = cv2.dnn.NMSBoxes(
         boxes, confidences, confidenceThreshold, NMSThreshold)
+
     detection_Objects = []
     if(len(detectionNMS) > 0):
         detection_Objects = []
@@ -87,3 +107,7 @@ def yolov3_detection(image_path):
     cv2.imshow('Image', image)
     cv2.waitKey(0)
     return 'ok from yolo_detection_image~'
+
+
+yolov3_detection('images/S__9388035.jpg')
+print(end='\n')
