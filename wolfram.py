@@ -12,9 +12,12 @@ def evaluation(question):
         #     question = question.replace('+', '%2B')
         # if('\lim _' in question):
         #     question = question.replace('\lim _','lim_')
-        # question = parse.quote(question.encode("utf-8"))
+        print('original: ', question)
+        question = question.replace(' ', '')
+        question = parse.quote(question.encode("utf-8"))
 
-        print(question)
+        print('after encode: ', question)
+
         url = 'http://api.wolframalpha.com/v2/query?appid='+appid+'&input=solve+'+question
         r = requests.get(url)
         dictionary = xmltodict.parse(r.text)
@@ -40,4 +43,4 @@ def evaluation(question):
         return question
 
 
-# print(evaluation('2^2'))
+# print(evaluation('2 x 8 + 7 / 6'))
