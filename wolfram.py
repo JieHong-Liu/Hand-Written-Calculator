@@ -40,4 +40,4 @@ def evaluation(question):
         return question
 
 
-#print(evaluation('2^2'))
+# print(evaluation('4^{2^{2}}+1'))
