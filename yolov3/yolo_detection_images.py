@@ -7,8 +7,8 @@ from yolov3.position import position_correction
 def yolov3_detection(image_path):
     confidenceThreshold = 0.5
     NMSThreshold = 0.3
-    modelConfiguration = 'yolov3/cfg/yolov4-HWC.cfg'
-    modelWeights = 'yolov3/weight/yolov4-obj_15600.weights'
+    modelConfiguration = 'yolov3/cfg/yolov4-obj.cfg'
+    modelWeights = 'yolov3/weight/yolov4-obj_18000.weights'
     labelsPath = 'yolov3/data/HWC.names'
     # modelConfiguration = 'cfg/yolov4-obj.cfg'
     # modelWeights = 'weight/yolov4-obj_11600.weights'

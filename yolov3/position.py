@@ -1,6 +1,7 @@
 # from tree import Node
 from anytree import Node, RenderTree
 # [symbol, x, y, w, h, centroid, confidences[i]*100])
+small_height = ['-']
 relations = ['+', '-', '\\times', '=', '\\to', '/']  # non-scripted
 Open_Bracket = ['(', '{', '[']
 Close_Bracket = [')', '}', ']']
@@ -19,7 +20,9 @@ c = 0.5
 
 
 def symbol_class(snode):  # 給予類別類型
-    if snode[0] in Frac:
+    if snode[0] in small_height:
+        return 'small height'
+    elif snode[0] in Frac:
         return 'Frac'
     elif snode[0] in relations:
         return 'relations'
@@ -49,17 +52,15 @@ def position_correction(detection_Objects, file_name):
     s_list = x_min_sort(detection_Objects)
     root = exp_Tree(s_list)
     print(RenderTree(root))
-    for d_object in detection_Objects:
-        # if(float(d_object[5]) > 0):
-        #c.append(Node(d_object[0], parent=c[nums]))
-        print(d_object[0], end=' ')
-    # ans_list = traversal(root)
-    # for i in ans_list:
-    #     print(i, end=' ')
-    # with open(file_name+'.txt', 'w') as file:
-    #     for d_object in detection_Objects:
-    #         if(float(d_object[5]) > 0):
-    #             file.write(d_object[0])
+    print('\n')
+    sorted_list = []
+    traversal(root, sorted_list)
+    # print(sorted_list)
+    for i in sorted_list:
+        print(i, end=' ')
+    with open(file_name+'.txt', 'w') as file:
+        for d_object in sorted_list:
+            file.write(d_object)
 
 
 def x_min_sort(detection_Objects):
@@ -72,18 +73,25 @@ def x_min_sort(detection_Objects):
 
 
 def centroidY(snode):
-    s = symbol_class(snode)
-    H = (2*snode[2] + snode[4])
-    if s == 'Open_Bracket' or s == 'Root' or s == 'Ascender':
-        return c*H
-    elif s == 'relations' or s == 'Variable_Range' or s == 'centered' or s == 'Close_Bracket':
-        return 0.5*H
-    else:
-        return (1 - c)*H
+    basic_center = snode[2]+(snode[4] * 0.5)
+    adjustment = 0
+    symbol = symbol_class(snode)
+    if(symbol == 'small height'):
+        adjustment = 30
+        # H = (2*snode[2] + snode[4])
+        # if s == 'Open_Bracket' or s == 'Root' or s == 'Ascender':
+        #     return c*H
+        # elif s == 'small height':
+        #     return H
+        # elif s == 'relations' or s == 'Variable_Range' or s == 'centered' or s == 'Close_Bracket':
+        #     return 0.5*H
+        # else:
+        #     return (1 - c)*H
+    return basic_center + adjustment
 
 
 def exp_Tree(s_list):
-
+    bias = 0
     root = Node('expression', attribute='expression')
     for index, s_node in enumerate(s_list):
         try:
@@ -93,29 +101,28 @@ def exp_Tree(s_list):
                 if s_node[0] == '\\frac':
                     Node('above', parent=tmp)  # [0]
                     Node('below', parent=tmp)  # [1]
-                if(s_node[0] in limit_lable):
-                    bias = s_node[4]/3.5  # determine the next bias.
-                else:
-                    bias = s_node[4]/3  # determine the previous bias
-                # bias = 0
             else:
                 point = root
                 while(point.children):  # 如果有children就繼續執行
                     # print(point.children)
                     point = point.children[-1]  # 去取最新的Node，判斷他是哪一種expression
-                    print(point)
+                    # print(point)
                     segment_block = segment(point.attribute, s_node, bias)
-                    print(segment_block)
+                    # print(segment_block)
                     if point.name == '\\sqrt':
                         # contain means contain in square root.
                         if contain(point.attribute, s_node, bias):
-                            print('come in1')
+                            print('come in')
                             if not point.children:  # 如果是空的
                                 Node(s_node[0], parent=point, attribute=s_node)
                                 break
+                        else:
+                            if segment_block == 'hor':
+                                Node(
+                                    s_node[0], parent=point.parent, attribute=s_node)  # create a sibling node.
+                                break
                     # 如果是在水平線上，屬於同一階層(horizone)
                     elif segment_block == 'hor':
-                        print('come in12')
                         tmp = Node(
                             s_node[0], parent=point.parent, attribute=s_node)  # create a sibling node.
                         if s_node[0] == '\\frac':  # 遇到fraction後要新建above and below
@@ -124,7 +131,6 @@ def exp_Tree(s_list):
                         break
                     elif point.name == '\\frac':  # the last point is fraction.
                         print('fraction point is ', point.attribute[4])
-                        bias = point.attribute[4] * 0.5
                         if segment(point.attribute, s_node, bias) == 'above':  # 分子
                             point = point.children[0]
                             if not point.children:  # 如果不是空的
@@ -134,11 +140,9 @@ def exp_Tree(s_list):
                             point = point.children[1]
                             if not point.children:  # 如果不是空的
                                 Node(s_node[0], parent=point, attribute=s_node)
-                                bias = s_node[4]/2
                                 break
                     elif point.name == 'lim_':
                         # print("limit PA:",point.attribute)
-                        bias = point.attribute[4] * 0.3
                         if segment(point.attribute, s_node, bias) == 'below':
                             if not point.children:  # 如果是空的
                                 Node(s_node[0], parent=point, attribute=s_node)
@@ -183,61 +187,71 @@ def Horizon(treenode, node, bias):
 
 # to decide whether the segment is above,hor or below.
 def segment(treenode, node, bias):
-    # print("segment this time: treenode=",treenode,'node = ',node,'bias = ',bias)
-    if (treenode[2] - bias > centroidY(node)):
-        return 'above'
-    elif (treenode[2] + treenode[4] + bias < centroidY(node)):
+    if(node[0] == '\\frac'):
+        bias = 30
+    elif(node[0] == '-'):
+        if(treenode[0] != '\\frac'):
+            bias = treenode[4] * 0.5
+        else:
+            bias = 30
+    else:
+        bias = node[4] * 0.5
+
+    print("segment this time: treenode=", treenode,
+          'node = ', node, 'bias = ', bias)
+    center_of_left = treenode[2] + (treenode[4] * 0.5)  # 左邊的center
+    # center_of_right = node[2]+(node[4] * 0.5)  # 右邊的中心點
+    center_of_right = centroidY(node)
+
+    if(center_of_left + bias < center_of_right):
         return 'below'
+    elif(center_of_left - bias > center_of_right):
+        return 'above'
     else:
         return 'hor'
 
 
 def contain(treenode, node, bias):  # contain means contain in square root.
-    if (treenode[2] + bias < centroidY(node)) and treenode[1] + treenode[3] > node[1]:
+    # if (treenode[2] + bias < centroidY(node)) and treenode[1] + treenode[3] > node[1]:
+    #     return True
+    # else:
+    #     return False
+    bias = 0
+    center_of_left = treenode[2] + (treenode[4] * 0.5)  # 左邊的center
+    center_of_right = centroidY(node)
+    if(treenode[1] + treenode[3] + bias > node[1]):  # x + w + bias
         return True
     else:
         return False
 
 
-# def traversal(root):
-#     point = root
-#     stack = []
-#     sorted_list = []
-#     num = 0
-#     while (root.children):
-#         if point.name == 'expression' or len(point.children) > 1:
-#             stack.append(point)
-#             if (point.name == '\\frac'):
-#                 sorted_list.append('\\frac')
-#             point = point.children[0]
+def traversal(root, sorted_list):
 
-#         elif len(point.children) <= 1:
-#             if(point.name == 'superscript'):
-#                 sorted_list.append('^')
-#                 sorted_list.append('{')
-#                 num += 1
-#             elif(point.name == 'above'):
-#                 sorted_list.append('{')
-#             elif(point.name == 'below'):
-#                 sorted_list.append('}')
-#                 sorted_list.append('{')
-#                 num += 1
-#             elif(point.name == '\\frac'):
-#                 point = point.children[0]
-#                 continue
-#             else:
-#                 sorted_list.append(point.name)
-#             if len(point.children) == 1:
-#                 point = point.children[0]
-#             else:
-#                 point = stack[-1]
-#                 # if point.parent.children:
+    for child in root.children:
+        # print(child.name)
+        if(child.name == 'superscript'):
+            sorted_list.append('^')
+            sorted_list.append('{')
+        elif(child.name == 'above'):
+            sorted_list.append('{')
+        elif(child.name == 'below'):
+            sorted_list.append('}')
+            sorted_list.append('{')
+        elif(child.name == 'lim_'):
+            sorted_list.append(child.name+'{')
+        elif(child.name == '\\sqrt'):
+            sorted_list.append(child.name+'{')
+        else:
+            sorted_list.append(child.name)
 
-#                 point.children[0].parent = None
-#                 stack.pop()
-#                 # for i in range(num):
-#                 #     sorted_list.append('}')
+        if len(child.children) != 0:
+            traversal(child, sorted_list)
 
-#                 # sorted_list = expression_bracket_valid_helper(sorted_list)
-#                 # num = 0
-#     return sorted_list
+        if(child.name == 'below'):
+            sorted_list.append('}')
+        elif(child.name == 'superscript'):
+            sorted_list.append('}')
+        elif(child.name == 'lim_'):
+            sorted_list.append('}')
+        elif(child.name == '\\sqrt'):
+            sorted_list.append('}')

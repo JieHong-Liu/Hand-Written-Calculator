@@ -109,5 +109,5 @@ def yolov3_detection(image_path):
     return 'ok from yolo_detection_image~'
 
 
-yolov3_detection('images/equation7.jpg')
-print(end='\n')
+# yolov3_detection('images/lim5.jpg')
+# print(end='\n')

@@ -43,8 +43,5 @@ def evaluation(question):
         return question
 
 
-<<<<<<< HEAD
-# print(evaluation('4^{2^{2}}+1'))
-=======
-# print(evaluation('2 x 8 + 7 / 6'))
->>>>>>> cafcbfa4ff3bdf9a5332b56b475f42b2d2b663aa
+print(evaluation(
+    'lim_{ x \\to 8 } \\frac { 4 x ^ { 2 } + 5 ^ { 6 } } { 2 x ^ { 2 } + 3 }'))
