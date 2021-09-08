@@ -75,7 +75,7 @@ function Evaluate(){ // 可以運算的地方
     // document.getElementById('detectionResult').innerText = ans;
     document.getElementById('detectionResult').innerText = '\\(' + (document.getElementById('input_text').value) + '\\)'
     MathJax.typeset();
-
+    // console.log(document.getElementById('detectionResult').innerText)
     let str = document.getElementById('input_text').value;
     let newStr = encodeURIComponent(str)
     let math_expresion = new FormData();
