@@ -13,8 +13,8 @@ def evaluation(question):
         # if('\lim _' in question):
         #     question = question.replace('\lim _','lim_')
         print('original: ', question)
-        question = question.replace(' ', '')
-        question = parse.quote(question.encode("utf-8"))
+        # question = question.replace(' ', '')
+        # question = parse.quote(question.encode("utf-8"))
 
         print('after encode: ', question)
 
@@ -43,5 +43,5 @@ def evaluation(question):
         return question
 
 
-print(evaluation(
-    'lim_{ x \\to 8 } \\frac { 4 x ^ { 2 } + 5 ^ { 6 } } { 2 x ^ { 2 } + 3 }'))
+# print(evaluation(
+#     'lim_{ x \\to 8 } \\frac { 4 x ^ { 2 } + 5 ^ { 6 } } { 2 x ^ { 2 } + 3 }'))
