@@ -14,7 +14,7 @@ def evaluation(question):
         #     question = question.replace('\lim _','lim_')
         print('original: ', question)
         # question = question.replace(' ', '')
-        # question = parse.quote(question.encode("utf-8"))
+        question = parse.quote(question.encode("utf-8"))
 
         print('after encode: ', question)
 
@@ -24,7 +24,7 @@ def evaluation(question):
         json_object = json.dumps(dictionary)
         json_file = json.loads(json_object)
 
-        # print(json_file['queryresult']['pod'])
+        print(json_file['queryresult']['pod'])
         if(json_file['queryresult']['pod'][0]['@title'] == 'Indefinite integral'):
             return (json_file['queryresult']['pod'][0]['subpod']['plaintext'])
         elif(json_file['queryresult']['pod'][0]['@title'] == 'Definite integral'):
@@ -43,5 +43,4 @@ def evaluation(question):
         return question
 
 
-# print(evaluation(
-#     'lim_{ x \\to 8 } \\frac { 4 x ^ { 2 } + 5 ^ { 6 } } { 2 x ^ { 2 } + 3 }'))
+print(evaluation('2^{1+\\frac{3}{3}}-10'))

@@ -231,7 +231,7 @@ def traversal(root, sorted_list):
         # print(child.name)
         if(child.name == 'superscript'):
             sorted_list.append('^')
-            sorted_list.append('{')
+            sorted_list.append('(')
         elif(child.name == 'above'):
             sorted_list.append('{')
         elif(child.name == 'below'):
@@ -250,7 +250,7 @@ def traversal(root, sorted_list):
         if(child.name == 'below'):
             sorted_list.append('}')
         elif(child.name == 'superscript'):
-            sorted_list.append('}')
+            sorted_list.append(')')
         elif(child.name == 'lim_'):
             sorted_list.append('}')
         elif(child.name == '\\sqrt'):
