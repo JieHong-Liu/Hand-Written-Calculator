@@ -24,7 +24,7 @@ def evaluation(question):
         json_object = json.dumps(dictionary)
         json_file = json.loads(json_object)
 
-        # print(json_file['queryresult']['pod'])
+        print(json_file['queryresult']['pod'])
         if(json_file['queryresult']['pod'][0]['@title'] == 'Indefinite integral'):
             return (json_file['queryresult']['pod'][0]['subpod']['plaintext'])
         elif(json_file['queryresult']['pod'][0]['@title'] == 'Definite integral'):
@@ -43,8 +43,4 @@ def evaluation(question):
         return question
 
 
-<<<<<<< HEAD
-# print(evaluation('4^{2^{2}}+1'))
-=======
-# print(evaluation('2 x 8 + 7 / 6'))
->>>>>>> cafcbfa4ff3bdf9a5332b56b475f42b2d2b663aa
+print(evaluation('\\frac{d}{dx}(x)'))

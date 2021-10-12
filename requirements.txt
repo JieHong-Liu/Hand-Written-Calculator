@@ -5,7 +5,4 @@ numpy
 opencv-python-headless==4.5.3.56
 requests
 xmltodict
-<<<<<<< HEAD
-=======
 anytree
->>>>>>> cafcbfa4ff3bdf9a5332b56b475f42b2d2b663aa
