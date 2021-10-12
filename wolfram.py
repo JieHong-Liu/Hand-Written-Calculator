@@ -13,7 +13,7 @@ def evaluation(question):
         # if('\lim _' in question):
         #     question = question.replace('\lim _','lim_')
         print('original: ', question)
-        question = question.replace(' ', '')
+        # question = question.replace(' ', '')
         question = parse.quote(question.encode("utf-8"))
 
         print('after encode: ', question)
@@ -43,4 +43,4 @@ def evaluation(question):
         return question
 
 
-print(evaluation('\\frac{d}{dx}(x)'))
+print(evaluation('2^{1+\\frac{3}{3}}-10'))

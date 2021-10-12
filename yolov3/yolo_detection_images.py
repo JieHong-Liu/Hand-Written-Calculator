@@ -7,11 +7,12 @@ from yolov3.position import position_correction
 def yolov3_detection(image_path):
     confidenceThreshold = 0.5
     NMSThreshold = 0.3
-    modelConfiguration = 'yolov3/cfg/yolov4-HWC.cfg'
-    modelWeights = 'yolov3/weight/yolov4-obj_15600.weights'
+    modelConfiguration = 'yolov3/cfg/yolov4-obj.cfg'
+    # don't forget to change this weights!!!
+    modelWeights = 'yolov3/weight/yolov4-obj_18000.weights'
     labelsPath = 'yolov3/data/HWC.names'
     # modelConfiguration = 'cfg/yolov4-obj.cfg'
-    # modelWeights = 'weight/yolov4-obj_11600.weights'
+    # modelWeights = 'weight/yolov4-obj_11000.weights'
     # labelsPath = 'data/obj.names'
 
     labels = open(labelsPath).read().strip().split('\n')
@@ -84,6 +85,6 @@ def yolov3_detection(image_path):
         position_correction(detection_Objects, file_name)
         # print(detection_Objects)
 
-    cv2.imshow('Image', image)
-    cv2.waitKey(0)
+    # cv2.imshow('Image', image)
+    # cv2.waitKey(0)
     return 'ok from yolo_detection_image~'

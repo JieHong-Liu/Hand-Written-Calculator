@@ -28,7 +28,7 @@ def yolov3_detection(image_path):
     # labelsPath = 'data/HWC.names'
 
     modelConfiguration = 'cfg/yolov4-obj.cfg'
-    modelWeights = 'weight/yolov4-obj_15600.weights'
+    modelWeights = 'weight/yolov4-obj_18000.weights'
     labelsPath = 'data/HWC.names'
 
     labels = open(labelsPath).read().strip().split('\n')
@@ -109,5 +109,5 @@ def yolov3_detection(image_path):
     return 'ok from yolo_detection_image~'
 
 
-yolov3_detection('images/equation7.jpg')
-print(end='\n')
+# yolov3_detection('images/lim5.jpg')
+# print(end='\n')
