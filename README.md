@@ -109,5 +109,7 @@ We detect the math equation on the paper and send these information to our syste
 ## Part7. References
 
 [1] Zanibbi, R., Blostein, D., Cordy, J.R.: Recognizing mathematical expressions using tree transformation. IEEE Trans. PAMI, 24, 1455–1467 (2002)
+
 [2] Aida Calculus Math Handwriting Recognition Dataset
+
 [3] Brown wooden board photo (https://unsplash.com/photos/h0Vxgz5tyXA)
