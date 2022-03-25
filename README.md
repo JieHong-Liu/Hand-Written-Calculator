@@ -1,4 +1,4 @@
-#  HandWrite Calculator Project (Public)
+# Hand-Written-Calculator
 
 ---
 ###### tags: `Object Detection`, `YOLOv4`
