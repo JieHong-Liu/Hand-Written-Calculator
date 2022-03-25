@@ -18,7 +18,9 @@ colaborator: [Kevin](https://github.com/kevin60613)
 
 We use 40000 pictures as our datasets and 20000 pictures as test set in this dataset [Aida Calculus Math Handwriting Recognition Dataset
 ](https://www.kaggle.com/datasets/aidapearson/ocr-data) 
+
 And we use [YOLOv4](https://github.com/AlexeyAB/darknet) as our deep learning model.
+
 We detect the math equation on the paper and send these information to our system. 
 
 ## Part3. Design Method (Algorithm)
